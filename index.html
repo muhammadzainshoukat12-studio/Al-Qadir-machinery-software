@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced Retail Billing Software</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h1>AL Qadir Machinery Billing Software (Advanced)</h1>
+
+  <!-- Customer Section -->
+  <div class="card">
+    <h2>Customer</h2>
+    <select id="customerSelect"></select>
+    <input type="text" id="newCustomer" placeholder="Add New Customer">
+    <button onclick="addCustomer()">Add Customer</button>
+  </div>
+
+  <!-- Product Section -->
+  <div class="card">
+    <h2>Add Product</h2>
+    <select id="productSelect"></select>
+    <input type="number" id="productQty" placeholder="Quantity">
+    <button onclick="addProduct()">Add Product</button>
+  </div>
+
+  <!-- Invoice Table -->
+  <div class="card">
+    <h2>Invoice</h2>
+    <p>Invoice #: <span id="invoiceNo"></span></p>
+    <table border="1" cellpadding="8" width="100%">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Total</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="billingTable"></tbody>
+    </table>
+    <h3>Total Amount: Rs <span id="grandTotal">0</span></h3>
+    <button onclick="printInvoice('printInvoice')">Print Invoice</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
