@@ -1,122 +1,113 @@
-// ======== LocalStorage Keys ========
-let customers = JSON.parse(localStorage.getItem("customers")) || ["Guest"];
-let products = JSON.parse(localStorage.getItem("products")) || [
-  {name:"Product A", price:100},
-  {name:"Product B", price:200},
-  {name:"Product C", price:150}
-];
-let invoiceItems = JSON.parse(localStorage.getItem("invoiceItems")) || [];
-let grandTotal = 0;
-let invoiceNo = localStorage.getItem("invoiceNo") || 1;
+document.querySelector("form").addEventListener("submit", function(e){
+  e.preventDefault();
+  window.location.href = "dashboard.html";
+});
+let products = [];
 
-// ======== Populate Customer Dropdown ========
-function populateCustomer(){
-  let select = document.getElementById("customerSelect");
-  select.innerHTML = "";
-  customers.forEach(c=>{
-    select.innerHTML += `<option>${c}</option>`;
-  });
-}
-populateCustomer();
+function addProduct() {
+  let name = document.getElementById("pname").value;
+  let price = document.getElementById("pprice").value;
+  let stock = document.getElementById("pstock").value;
 
-// ======== Populate Product Dropdown ========
-function populateProduct(){
-  let select = document.getElementById("productSelect");
-  select.innerHTML = "";
-  products.forEach(p=>{
-    select.innerHTML += `<option value="${p.price}">${p.name} - Rs ${p.price}</option>`;
-  });
-}
-populateProduct();
-
-// ======== Add New Customer ========
-function addCustomer(){
-  let newC = document.getElementById("newCustomer").value.trim();
-  if(newC && !customers.includes(newC)){
-    customers.push(newC);
-    localStorage.setItem("customers", JSON.stringify(customers));
-    populateCustomer();
-    document.getElementById("newCustomer").value = "";
+  if(name === "" || price === "" || stock === "") {
+    alert("Please fill all fields");
+    return;
   }
+
+  let product = {
+    name: name,
+    price: price,
+    stock: stock
+  };
+
+  products.push(product);
+  showProducts();
+
+  document.getElementById("pname").value = "";
+  document.getElementById("pprice").value = "";
+  document.getElementById("pstock").value = "";
 }
 
-// ======== Add Product to Invoice ========
-function addProduct(){
-  let productIndex = document.getElementById("productSelect").selectedIndex;
-  let qty = parseInt(document.getElementById("productQty").value);
-  if(qty <= 0) return alert("Enter valid quantity");
-  
-  let product = products[productIndex];
-  let total = product.price * qty;
-  
-  invoiceItems.push({name:product.name, price:product.price, qty, total});
-  localStorage.setItem("invoiceItems", JSON.stringify(invoiceItems));
-  updateTable();
-  document.getElementById("productQty").value = "";
-}
-
-// ======== Update Invoice Table ========
-function updateTable(){
-  let table = document.getElementById("billingTable");
+function showProducts() {
+  let table = document.getElementById("productTable");
   table.innerHTML = "";
-  grandTotal = 0;
-  
-  invoiceItems.forEach((item,index)=>{
-    grandTotal += item.total;
-    table.innerHTML += `<tr>
-      <td>${item.name}</td>
-      <td>${item.price}</td>
-      <td>${item.qty}</td>
-      <td>${item.total}</td>
-      <td><button onclick="removeItem(${index})">X</button></td>
-    </tr>`;
-  });
-  document.getElementById("grandTotal").innerText = grandTotal;
-  document.getElementById("invoiceNo").innerText = invoiceNo;
-}
 
-// ======== Remove Item ========
-function removeItem(index){
-  invoiceItems.splice(index,1);
-  localStorage.setItem("invoiceItems", JSON.stringify(invoiceItems));
-  updateTable();
-}
-
-// ======== Print Invoice ========
-function printInvoice(){
-  if(invoiceItems.length===0) return alert("Add products first");
-  
-  let customer = document.getElementById("customerSelect").value;
-  let printContent = `<h2> AL Qadir Machinery Retail Shop Invoice</h2>
-    <p><b>Invoice #:</b> ${invoiceNo}</p>
-    <p><b>Customer:</b> ${customer}</p>
-    <table border="1" cellpadding="8" width="100%">
+  products.forEach(p => {
+    let row = `
       <tr>
-        <th>Product</th><th>Price</th><th>Qty</th><th>Total</th>
-      </tr>`;
-  
-  invoiceItems.forEach(i=>{
-    printContent += `<tr>
-      <td>${i.name}</td>
-      <td>${i.price}</td>
-      <td>${i.qty}</td>
-      <td>${i.total}</td>
-    </tr>`;
+        <td>${p.name}</td>
+        <td>${p.price}</td>
+        <td>${p.stock}</td>
+      </tr>
+    `;
+    table.innerHTML += row;
   });
-  
-  printContent += `</table>
-    <h3>Total Amount: Rs ${grandTotal}</h3>`;
-  
-  let w = window.open();
-  w.document.write(printContent);
-  w.print();
-  w.close();
-  
-  // Reset Invoice
-  invoiceItems = [];
-  grandTotal = 0;
-  invoiceNo++;
-  localStorage.setItem("invoiceItems", JSON.stringify(invoiceItems));
-  localStorage.setItem("invoiceNo", invoiceNo);
-  updateTable();
+}
+let customers = [];
+
+function addCustomer() {
+  let name = document.getElementById("cname").value;
+  let phone = document.getElementById("cphone").value;
+
+  if(name === "" || phone === "") {
+    alert("Please fill all fields");
+    return;
+  }
+
+  let customer = {
+    name: name,
+    phone: phone
+  };
+
+  customers.push(customer);
+  showCustomers();
+
+  document.getElementById("cname").value = "";
+  document.getElementById("cphone").value = "";
+}
+
+function showCustomers() {
+  let table = document.getElementById("customerTable");
+  table.innerHTML = "";
+
+  customers.forEach(c => {
+    let row = `
+      <tr>
+        <td>${c.name}</td>
+        <td>${c.phone}</td>
+      </tr>
+    `;
+    table.innerHTML += row;
+  });
+}
+function calculateTotal() {
+  let price = document.getElementById("price").value;
+  let qty = document.getElementById("qty").value;
+  let total = price * qty;
+
+  document.getElementById("total").value = total || 0;
+}
+
+function generateInvoice() {
+  let customer = document.getElementById("customerName").value;
+  let product = document.getElementById("productName").value;
+  let price = document.getElementById("price").value;
+  let qty = document.getElementById("qty").value;
+  let total = document.getElementById("total").value;
+
+  if(customer === "" || product === "" || price === "" || qty === "") {
+    alert("Please fill all fields");
+    return;
+  }
+
+  document.getElementById("pCustomer").innerText = customer;
+  document.getElementById("pProduct").innerText = product;
+  document.getElementById("pPrice").innerText = price;
+  document.getElementById("pQty").innerText = qty;
+  document.getElementById("pTotal").innerText = total;
+
+  document.getElementById("invoicePreview").style.display = "block";
+}
+function printInvoice() {
+  window.print();
 }

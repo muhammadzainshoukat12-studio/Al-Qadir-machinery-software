@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice | Al-Qadir Machinery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Al-Qadir</h2>
+    <ul>
+      <li onclick="location.href='dashboard.html'">Dashboard</li>
+      <li onclick="location.href='products.html'">Products</li>
+      <li onclick="location.href='customers.html'">Customers</li>
+      <li class="active">Invoice</li>
+      <li>Reports</li>
+      <li class="logout">Logout</li>
+    </ul>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <h1>Create Invoice</h1>
+
+    <div class="card">
+      <h3>Invoice Details</h3><br>
+
+      <label>Customer Name</label>
+      <input type="text" id="customerName" placeholder="Customer Name">
+
+      <label>Product Name</label>
+      <input type="text" id="productName" placeholder="Product Name">
+
+      <label>Price</label>
+      <input type="number" id="price" placeholder="Price">
+
+      <label>Quantity</label>
+      <input type="number" id="qty" placeholder="Quantity" oninput="calculateTotal()">
+
+      <label>Total</label>
+      <input type="number" id="total" placeholder="Total" readonly>
+
+      <br><br>
+      <button onclick="generateInvoice()">Generate Invoice</button>
+    </div>
+
+    <br>
+
+    <!-- Invoice Preview -->
+    <div class="card" id="invoicePreview" style="display:none;">
+      <h3>Invoice Preview</h3>
+      <p><b>Customer:</b> <span id="pCustomer"></span></p>
+      <p><b>Product:</b> <span id="pProduct"></span></p>
+      <p><b>Price:</b> <span id="pPrice"></span></p>
+      <p><b>Quantity:</b> <span id="pQty"></span></p>
+      <p><b>Total:</b> <span id="pTotal"></span></p>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

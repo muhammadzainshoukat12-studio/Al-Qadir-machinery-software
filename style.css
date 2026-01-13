@@ -1,50 +1,161 @@
-body {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: Arial, sans-serif;
-  background: #f0f4f8;
-  padding: 20px;
 }
 
-.container {
-  max-width: 800px;
-  margin: auto;
+body {
+  background: #0f766e;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-h1, h2, h3 {
+.login-box {
+  background: #ffffff;
+  padding: 30px;
+  width: 300px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.login-box h2 {
   color: #0f766e;
 }
 
-.card {
-  background: #fff;
-  padding: 20px;
-  margin: 15px 0;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+.login-box p {
+  margin-bottom: 20px;
+  color: #555;
 }
 
-input, select {
-  padding: 8px;
-  margin: 5px;
+.login-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
 }
 
-button {
-  padding: 8px 12px;
+.login-box button {
+  width: 100%;
+  padding: 10px;
   background: #0f766e;
   color: #fff;
   border: none;
   cursor: pointer;
-  margin-left: 5px;
+}
+
+.login-box button:hover {
+  background: #115e59;
+}
+.dashboard {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background: #0f766e;
+  color: #fff;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.sidebar ul li:hover {
+  background: #115e59;
+}
+
+.logout {
+  margin-top: 20px;
+  background: #dc2626;
+}
+
+.main {
+  flex: 1;
+  padding: 30px;
+  background: #f0fdfa;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 25px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+}
+
+button {
+  padding: 10px 15px;
+  background: #0f766e;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
 button:hover {
   background: #115e59;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+.active {
+  background: #115e59;
+}
+label {
+  font-weight: bold;
+  display: block;
   margin-top: 10px;
 }
-
-th, td {
+.invoice-box {
+  max-width: 400px;
+  margin: auto;
   text-align: center;
+  border: 1px solid #ccc;
+}
+
+/* PRINT SETTINGS */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .invoice-box, .invoice-box * {
+    visibility: visible;
+  }
+
+  .invoice-box {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  button {
+    display: none;
+  }
 }
